@@ -7,6 +7,7 @@ project(
         HOMEPAGE_URL "http://vorlesung.nabla-b.engineering"
 )
 
+# Add CLI Libiary to Project
 find_package(cli11 QUIET)
 if(NOT cli11_FOUND)
         include(FetchContent)
@@ -18,6 +19,18 @@ if(NOT cli11_FOUND)
         FetchContent_MakeAvailable(cli11)
 endif()
 
+# Add nlohmann_json Libiary to Project
+find_package(nlohmann_json QUIET)
+if(NOT nlohmann_json_FOUND)
+        include(FetchContent)
+        FetchContent_Declare(
+                nlohmann_json
+                GIT_REPOSITORY https://github.com/nlohmann/json
+                GIT_TAG master
+        )
+        FetchContent_MakeAvailable(nlohmann_json)
+endif()
+
 
 add_executable( ${PROJECT_NAME} "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cc" )
-target_link_libraries( ${PROJECT_NAME} CLI11::CLI11 )
+target_link_libraries( ${PROJECT_NAME} CLI11::CLI11 nlohmann_json::nlohmann_json)

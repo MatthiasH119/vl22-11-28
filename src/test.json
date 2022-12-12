@@ -1,0 +1,36 @@
+{
+    "Schrank": "Kleiderschrank",
+    "Ort": "Schlafzimmer",
+    "faecher": [
+      {
+        "fach": "Schublade unten",
+        "versch. obj.": 3,
+        "objekte": [
+          "Socken",
+          "Unterhose",
+          "Unterhemd"
+        ]
+      },
+      {
+        "fach": "Schublade oben",
+        "versch. obj.": 4,
+        "objekte": [
+          "Pullover",
+          "T-Shirt",
+          "Jacke",
+          "Langarmshirt"
+        ]
+      },
+      {
+        "fach": "Kleiderstange",
+        "versch. obj.": 5,
+        "objekte": [
+          "Lederhose",
+          "Hemd",
+          "Jacke",
+          "Schal",
+          "Pullover"
+        ]
+      }
+    ]
+  }
