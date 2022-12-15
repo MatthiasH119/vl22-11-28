@@ -18,10 +18,12 @@ int main (int argc, char** argv){
         ->check(CLI::ExistingFile);
 
     
-    bool inhalt_flag = false, change_flag;
+    bool inhalt_flag = false, change_flag, count_flag;
     app.add_option("-i, --inhalt", inhalt_flag, "Gibt Inhalt des Lagers aus. Dazu '-i 1' oder '-i true' eingeben.");
 
     app.add_option("-c, --change", change_flag, "Ändert den Inhalt des Lagers. Dazu '-c 1' oder '-c true' eingeben.");
+
+    app.add_option("-z, --count", count_flag, "Zählt den Inhalt des Lagers. Dazu '-z 1' oder '-z true' eingeben.");
 
 /*  
     #########################################################################################################################################
@@ -102,7 +104,18 @@ int main (int argc, char** argv){
         }
     }
 
-//  #   -c change
+//  #   Im Programmaufruf kann mit '-z true' eine Flag gesetzt werden. Diese bewirkt im folgenden, dass der Inhalt der Regale gezählt werden kann.
+    if(count_flag == true){
+        for (auto& member : database_object["Regale"]){
+            int item_counter = 0;
+            for (auto& Inhalt : member["Inhalt"]){
+                item_counter++;
+            }
+            std::cout << "Anzahl der Elemente: " << item_counter << std::endl;
+        }
+    }
+
+//  #   Im Programmaufruf kann mit '-c true' eine Flag gesetzt werden. Diese bewirkt im folgenden, dass der Inhalt der Regale geändert werden kann.
     if(change_flag == true){
         std::cout << std::endl << "MENÜPUNKT: ÄNDERUNGEN" << std::endl;             //Dialog
         int counter_change_flag = 0;                                                //Einführen einer Variablen zum erfassen, ob und wie viele Änderungen vorgenommen werden.
@@ -117,7 +130,7 @@ int main (int argc, char** argv){
             if(auswahl == '1'){
                 std::cin  >> change["Inhalt"];
                 std::cout << "Geänderter Inhalt: " << change["Inhalt"] << std::endl;
-                counter_change_flag++;
+                counter_change_flag++;                   
             }
         }
         if(counter_change_flag != 0){                                               //Wenn Änderungen vorgenommen werden, wird hier abgefragt, ob und wo diese gespeichert werden sollen.
@@ -126,14 +139,14 @@ int main (int argc, char** argv){
             counter_change_flag = 0;                                                //Reset der Variable, diese wird nun für eine andere Abfrage verwendet.
             std::cout << std::endl << "Möchten Sie die Änderungen speichern? Ja (1) - Nein (0)" << std::endl << "Ihre Auswahl: ";
             std::cin  >> counter_change_flag;
-            
+
             if(counter_change_flag == 1){
                 std::string datei_ausgabe{};
                 std::cout << "Name der Ausgabedatei: ";
                 std::cin >> datei_ausgabe;
 
                 std::ofstream save_as{datei_ausgabe};
-                save_as << database_object.dump();
+                save_as << database_object.dump(4);
                 save_as.close();
             }
             else {
